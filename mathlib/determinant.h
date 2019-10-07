@@ -48,3 +48,24 @@ inline BaseData cofactor(BaseData& base_data, int cur_row, int cur_col)
 	return res;
 }
 
+
+//求行列式
+inline float determinant(BaseData& base_data)
+{
+	if (base_data.row != base_data.col)
+	{
+		printf("rows must be equal to columns \n");
+		return 0.0;
+	}
+	if (base_data.row == 1)
+		return base_data.data[0][0];
+
+	float sum = 0.0;
+	for (int i = 0; i < base_data.col; i++)
+	{
+		BaseData tem_data = cofactor(base_data, 1, i+1);
+		sum += base_data.data[0][i] * pow(-1, 1+i+1) * determinant(tem_data);
+		release_base_data(tem_data);
+	}
+	return sum;
+}
