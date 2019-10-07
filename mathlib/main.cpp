@@ -2,12 +2,12 @@
 #include "matrix.h"
 int main()
 {
-	matrix mat;
-	init_matrix(mat,4,4);
+	BaseData data;
+	init_base_data(data,4,4);
 	float r0[] = {1,1,1,1};
-	input_matrix_row(mat, 0, r0, sizeof(r0) / sizeof(float));
-	print_matrix(mat);
+	input_base_data_row(data, 0, r0, sizeof(r0) / sizeof(float));
+	print_base_data(data);
 	getchar();
-	release_matrix(mat);
+	release_base_data(data);
 	return 0;
 }
