@@ -76,6 +76,21 @@ public:
 		return x * other.y - y * other.x;
 	}
 
+	void normalize(float tolerance = 1e-04f)
+	{
+		float len = length();
+		if (len > (tolerance * tolerance))
+		{
+			x = x * 1.0f / len;
+			y = y * 1.0f / len;
+		}
+	}
+
+	bool isNaN() const
+	{
+		return isnan(x) || isnan(y);
+	}
+
 public:
 	float x, y;
 };
