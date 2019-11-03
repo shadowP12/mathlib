@@ -100,6 +100,6 @@ public:
 		}
 	}
 
-private:
+public:
 	float x, y, z;
 };

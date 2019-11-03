@@ -25,11 +25,14 @@ bool pointInTriangle(const Vector3& p, const Vector3& a, const Vector3& b, const
 
 int main()
 {
+	printf("%f\n", std::sin(3.1415926 / 2.0));
+	/*
 	bool test = pointInTriangle(Vector3(6,4,0), Vector3(0,0,0), Vector3(5,10,0), Vector3(10,0,0));
 	if (test)
 		printf("yes\n");
 	else
 		printf("no\n");
+	*/
 	getchar();
 	return 0;
 }
