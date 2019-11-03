@@ -1,6 +1,6 @@
 #pragma once
+#include "MathPrerequisites.h"
 #include <assert.h>
-#include <math.h>
 class Vector3
 {
 public:

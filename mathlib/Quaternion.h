@@ -1,6 +1,7 @@
 #pragma once
 #include "MathPrerequisites.h"
 #include "Vector3.h"
+#include "Matrix4.h"
 
 class Quaternion
 {
@@ -63,6 +64,15 @@ public:
 		x = sinp * cosy * cosr - cosp * siny * sinr;
 		y = cosp * siny * cosr + sinp * cosy * sinr;
 		z = cosp * cosy * sinr - sinp * siny * cosr;
+	}
+
+	Matrix4 toMatrix()
+	{
+		return Matrix4(
+			1.0f - 2.0f * y * y - 2.0f * z * z, 2.0f * x * y - 2.0f * z * w, 2.0f * x * z + 2.0f * y * w, 0.0f,
+			2.0f * x * y + 2.0f * z * w, 1.0f - 2.0f * x * x - 2.0f * z * z, 2.0f * y * z - 2.0f * x * w, 0.0f,
+			2.0f * x * z - 2.0f * y * w, 2.0f * y * z + 2.0f * x * w, 1.0f - 2.0f * x * x - 2.0f * y * y, 0.0f,
+			0.0f, 0.0f, 0.0f, 1.0f);
 	}
 
 public:
