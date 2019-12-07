@@ -13,3 +13,10 @@ inline float degrees(float radians)
 {
 	return (radians * 180.0) / PI;
 }
+
+inline void swap(float& a, float& b)
+{
+	float t = a;
+	a = b;
+	b = t;
+}

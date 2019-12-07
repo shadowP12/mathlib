@@ -14,6 +14,7 @@ public:
 		MatrixNxM<M, N> mat_transpose;
 		for (uint32_t row = 0; row < N; row++)
 		{
+
 			for (uint32_t col = 0; col < M; col++)
 				mat_transpose[col][row] = m[row][col];
 		}
