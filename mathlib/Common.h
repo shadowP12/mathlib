@@ -22,3 +22,37 @@ inline bool pointInTriangle(const Vector3& p, const Vector3& a, const Vector3& b
 {
 	return sameSide(p, a, b, c) && sameSide(p, b, a, c) && sameSide(p, c, a, b);
 }
+
+// 球面坐标系转笛卡尔坐标系
+// s.x:r 半径
+// s.y:theta 仰角
+// s.z:phi 方位角
+// note:这里使用右手坐标系
+inline Vector3 cartesianCoord2SphericalCoord(const Vector3& s)
+{
+	Vector3 ret;
+	ret.x = s.x * std::sin(s.y) * std::cos(s.z);
+	ret.y = s.x * std::cos(s.y);
+	ret.z = -(s.x * std::sin(s.y) * std::sin(s.z)); // 注意这里的负号
+	return ret;
+}
+
+inline Vector3 cartesianCoord2SphericalCoord(float r, float theta, float phi)
+{
+	Vector3 ret;
+	ret.x = r * std::sin(theta) * std::cos(phi);
+	ret.y = r * std::cos(theta);
+	ret.z = -(r * std::sin(theta) * std::sin(phi)); // 注意这里的负号
+	return ret;
+}
+
+// 笛卡尔坐标系转球面坐标系
+inline Vector3 sphericalCoord2CartesianCoord(const Vector3& c)
+{
+	Vector3 ret;
+	ret.x = std::sqrt(c.x*c.x + c.y*c.y + c.z*c.z); //r
+	ret.y = std::atan2(-c.z, c.x); //theta
+	ret.z = acos(c.y / ret.x); //phi
+	
+	return ret;
+}
