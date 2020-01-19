@@ -36,3 +36,20 @@ inline bool intersect(const Ray& ray, const BBox& bbox)
 
 	return true;
 }
+
+// 获取一个点投射到一条线段上的投影点
+Vector3 pointOnSegment(const Vector3& p, const Vector3& a, const Vector3& b)
+{
+    Vector3 d0 = p - a;
+    Vector3 d1 = b - a;
+    float l = d1.length();
+    d1.normalize();
+    float t = d1.dot(d0);
+    if (t < 0.0f)
+        return a;
+
+    if (t > l)
+        return b;
+
+    return a + d1 * t;
+}
