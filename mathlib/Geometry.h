@@ -43,7 +43,7 @@ inline bool intersect(const Ray& ray, const BBox& bbox)
 	return true;
 }
 
-float intersect(const Ray& ray, const Plane& plane)
+inline float intersect(const Ray& ray, const Plane& plane)
 {
     float denom = Vector3::dot(plane.normal, ray.dir);
     if (std::abs(denom) > 1e-6)
@@ -58,7 +58,7 @@ float intersect(const Ray& ray, const Plane& plane)
 }
 
 // 获取一个点投射到一条线段上的投影点
-Vector3 pointOnSegment(const Vector3& p, const Vector3& a, const Vector3& b)
+inline Vector3 pointOnSegment(const Vector3& p, const Vector3& a, const Vector3& b)
 {
     Vector3 d0 = p - a;
     Vector3 d1 = b - a;
@@ -72,4 +72,28 @@ Vector3 pointOnSegment(const Vector3& p, const Vector3& a, const Vector3& b)
         return b;
 
     return a + d1 * t;
+}
+
+// 创建法向量坐标系
+void createCoordinateSystem(const Vector3& N, Vector3& Nt, Vector3& Nb)
+{
+    if (std::fabs(N.x) > std::fabs(N.y))
+        Nt = Vector3(N.z, 0, -N.x) / sqrtf(N.x * N.x + N.z * N.z);
+    else
+        Nt = Vector3(0, -N.z, N.y) / sqrtf(N.y * N.y + N.z * N.z);
+    Nb = N.cross(Nt);
+}
+
+// 均匀的半球采样
+// gl坐标系
+inline Vector3 uniformSampleHemisphere(const float& r0, const float& r1)
+{
+    // cos(theta) = r0 = y
+    // cos^2(theta) + sin^2(theta) = 1 -> sin(theta) = srtf(1 - cos^2(theta)
+    float sinTheta = sqrtf(1 - r0 * r0);
+    float phi = 2 * 3.1415926 * r1;
+    float x = sinTheta * cosf(phi);
+    float z = sinTheta * sinf(phi);
+    float y = r0;
+    return Vector3(x, y, z);
 }
