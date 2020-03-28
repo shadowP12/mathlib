@@ -81,6 +81,11 @@ public:
 		return x * vec.x + y * vec.y + z * vec.z;
 	}
 
+	static float dot(const Vector3& vec0, const Vector3& vec1)
+    {
+        return vec0.x * vec1.x + vec0.y * vec1.y + vec0.z * vec1.z;
+    }
+
 	Vector3 cross(const Vector3& other) const
 	{
 		return Vector3(
@@ -88,6 +93,14 @@ public:
 			z * other.x - x * other.z,
 			x * other.y - y * other.x);
 	}
+
+    static Vector3 cross(const Vector3& vec0, const Vector3& vec1)
+    {
+        return Vector3(
+                vec0.y * vec1.z - vec0.z * vec1.y,
+                vec0.z * vec1.x - vec0.x * vec1.z,
+                vec0.x * vec1.y - vec0.y * vec1.x);
+    }
 
 	void normalize(float tolerance = 1e-04f)
 	{
@@ -99,6 +112,19 @@ public:
 			z = z * 1.0f / len;
 		}
 	}
+
+    static Vector3 normalize(const Vector3& vec, float tolerance = 1e-04f)
+    {
+        float len = vec.length();
+        if (len > (tolerance * tolerance))
+        {
+            return Vector3(
+                    vec.x * 1.0f / len,
+                    vec.y * 1.0f / len,
+                    vec.z * 1.0f / len);
+        }
+        return Vector3(vec.x, vec.y, vec.z);
+    }
 
 public:
 	float x, y, z;

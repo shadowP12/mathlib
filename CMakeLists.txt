@@ -3,8 +3,7 @@ project(test)
 
 set(CMAKE_CXX_STANDARD 14)
 
-include_directories(mathlib)
 include_directories(3rdParty)
-include_directories(3rdParty/stb)
+include_directories(mathlib)
 
 add_executable(test example/main.cpp)

@@ -13,6 +13,12 @@ struct BBox
 	Vector3 max;
 };
 
+struct Plane
+{
+    Vector3 center;
+    Vector3 normal;
+};
+
 inline bool intersect(const Ray& ray, const BBox& bbox)
 {
 	// 映射到2D平面上
@@ -35,6 +41,20 @@ inline bool intersect(const Ray& ray, const BBox& bbox)
 		return false;
 
 	return true;
+}
+
+float intersect(const Ray& ray, const Plane& plane)
+{
+    float denom = Vector3::dot(plane.normal, ray.dir);
+    if (std::abs(denom) > 1e-6)
+    {
+        Vector3 difference = plane.center - ray.orig;
+        float t = Vector3::dot(plane.normal, difference) / denom;
+        if (t >= 0)
+            return t;
+        return -1;
+    }
+    return -1;
 }
 
 // 获取一个点投射到一条线段上的投影点
