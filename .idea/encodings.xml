@@ -4,5 +4,6 @@
     <file url="file://$PROJECT_DIR$/mathlib/Common.h" charset="GBK" />
     <file url="file://$PROJECT_DIR$/mathlib/Geometry.h" charset="GBK" />
     <file url="file://$PROJECT_DIR$/mathlib/Matrix4.h" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/mathlib/Vector2.h" charset="GBK" />
   </component>
 </project>

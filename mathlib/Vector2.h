@@ -91,6 +91,23 @@ public:
 		return isnan(x) || isnan(y);
 	}
 
+	static float dot(const Vector2& vec0, const Vector2& vec1)
+    {
+	    return vec0.x * vec1.x + vec0.y * vec1.y;
+    }
+
+    static Vector2 normalize(const Vector2& vec, float tolerance = 1e-04f)
+    {
+        float len = vec.length();
+        if (len > (tolerance * tolerance))
+        {
+            return Vector2(
+                    vec.x * 1.0f / len,
+                    vec.y * 1.0f / len);
+        }
+        return Vector2(vec.x, vec.y);
+    }
+
 public:
 	float x, y;
 };

@@ -56,3 +56,23 @@ inline Vector3 sphericalCoord2CartesianCoord(const Vector3& c)
 	
 	return ret;
 }
+
+inline Vector2 projectPointToVector(const Vector2& point, const Vector2& proj)
+{
+    Vector2 ret;
+    const float mul = Vector2::dot(point, proj) / Vector2::dot(proj, proj);
+    ret.x = mul * proj.x;
+    ret.y = mul * proj.y;
+    return ret;
+}
+
+inline Vector3 projectPointToVector(const Vector3& point, const Vector3& proj)
+{
+    Vector3 ret;
+    const float mul = Vector3::dot(point, proj) / Vector3::dot(proj, proj);
+    ret.x = mul * proj.x;
+    ret.y = mul * proj.y;
+    ret.z = mul * proj.z;
+    return ret;
+}
+
