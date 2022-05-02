@@ -76,3 +76,96 @@ inline Vector3 projectPointToVector(const Vector3& point, const Vector3& proj)
     return ret;
 }
 
+void printMatrix(int n, float* m)
+{
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < n; ++j) {
+            int idx = i * n + j;
+            printf("%f  ", m[idx]);
+        }
+        printf("\n");
+    }
+}
+
+void printVector(int n, float* v)
+{
+    for (int i = 0; i < n; ++i) {
+        printf("%f  ", v[i]);
+    }
+    printf("\n");
+}
+
+// 矩阵乘法(行优先)
+void matrixMult(int n, float* m0, float* m1, float*& out)
+{
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < n; ++j) {
+            int idx = i * n + j;
+            out[idx] = 0.0f;
+            for (int k = 0; k < n; ++k) {
+                out[idx] += m0[i * n + k] * m1[k * n + j];
+            }
+        }
+    }
+}
+
+// 矩阵向量乘法
+void matrixVertorMult(int n, float* m, float* v, float*& out)
+{
+    for (int i = 0; i < n; ++i) {
+        out[i] = 0.0f;
+        for (int j = 0; j < n; ++j) {
+            out[i] += m[i * n + j] * v[j];
+        }
+    }
+}
+
+// jacobi iteration
+inline void jacobiIteration(int n, int tol, float* A, float* b, float*& x)
+{
+    // 将A分解为D,L,U三个矩阵
+    // 对角矩阵求逆方便，所以提前处理
+    float* invD = new float[n * n];
+    float* LU = new float[n * n];
+    memset(invD, 0, sizeof(float) * n * n);
+    memset(LU, 0, sizeof(float) * n * n);
+
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < n; ++j) {
+            int idx = i * n + j;
+            // 对角
+            if (i == j) {
+                invD[idx] = 1.0f / A[idx];
+            } else {
+                LU[idx] = -A[idx];
+            }
+        }
+    }
+
+    // 求jacobi矩阵
+    float* Bj = new float[n * n];
+    memset(Bj, 0, sizeof(float) * n * n);
+    matrixMult(n, invD, LU, Bj);
+
+    // 求f
+    float* f = new float[n];
+    memset(f, 0, sizeof(float) * n);
+    matrixVertorMult(n, invD, b, f);
+
+    // 迭代
+    float* t = new float[n];
+    for (int i = 0; i < tol; ++i) {
+        matrixVertorMult(n, Bj, x, t);
+
+        for (int j = 0; j < n; ++j) {
+            x[j] = t[j] + f[j];
+        }
+    }
+
+    delete [] invD;
+    delete [] LU;
+    delete [] Bj;
+    delete [] f;
+    delete [] t;
+}
+
